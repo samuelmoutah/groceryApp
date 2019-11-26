@@ -1,8 +1,11 @@
 package com.rjt.groceryapp.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -15,6 +18,7 @@ import com.rjt.groceryapp.adapters.AdapterCategory
 import com.rjt.groceryapp.models.Category
 import com.rjt.groceryapp.models.CategoryList
 import kotlinx.android.synthetic.main.activity_category.*
+import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 class CategoryActivity : AppCompatActivity() {
@@ -27,15 +31,40 @@ class CategoryActivity : AppCompatActivity() {
 
         init()
 
+        val toolbar = toolbar
+        toolbar.title = "PRODUCT CATEGORY"
+        setSupportActionBar(toolbar)
+
         getCategory()
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.category_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_setting -> {
+                return true
+            }
+            R.id.action_logout -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun init() {
+
         var list = ArrayList<Category>()
         recycler_view.layoutManager = LinearLayoutManager(this)
         //view.recycler_view.layoutManager = GridLayoutManager(activity, 2)
         adapter = AdapterCategory(this, list)
         recycler_view.adapter = adapter
+
 
     }
 
@@ -60,7 +89,6 @@ class CategoryActivity : AppCompatActivity() {
             Response.ErrorListener {
                 Log.e("mo", it.message)
             })
-
         requestQueue.add(stringRequest)
     }
 }

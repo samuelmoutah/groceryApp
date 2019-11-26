@@ -3,6 +3,8 @@ package com.rjt.groceryapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -12,6 +14,7 @@ import com.google.gson.Gson
 import com.rjt.groceryapp.R
 import com.rjt.groceryapp.models.Registration
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity() {
@@ -20,13 +23,42 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+
+        val toolbar = toolbar
+        toolbar.title = "REGISTRATION"
+        setSupportActionBar(toolbar)
+
         //doRegister()
         button_submit.setOnClickListener{
             doRegister()
             var intent = Intent(this, LoginActivity()::class.java)
             startActivity(intent)
         }
+        text_view_login.setOnClickListener {
+            var intent = Intent(this, LoginActivity()::class.java)
+            startActivity(intent)
+        }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.signup_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_login -> {
+                var intent = Intent(this, LoginActivity()::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_setting -> {
+                return true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 

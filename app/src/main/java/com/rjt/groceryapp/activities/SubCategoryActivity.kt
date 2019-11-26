@@ -1,8 +1,11 @@
 package com.rjt.groceryapp.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.android.volley.Request
@@ -17,6 +20,7 @@ import com.rjt.groceryapp.models.SubCategory
 import com.rjt.groceryapp.models.SubCategoryList
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_sub_category.*
+import kotlinx.android.synthetic.main.app_bar.*
 
 class SubCategoryActivity : AppCompatActivity() {
 
@@ -26,9 +30,38 @@ class SubCategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_category)
 
+
         init()
         //getSubCategory()
 
+        val toolbar = toolbar
+        toolbar.title = "PRODUCT LIST"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sub_category_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_setting -> {
+                return true
+            }
+            R.id.action_logout -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                return true
+            }
+            android.R.id.home -> {
+
+                finish()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 

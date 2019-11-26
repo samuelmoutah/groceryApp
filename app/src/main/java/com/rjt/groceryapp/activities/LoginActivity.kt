@@ -1,11 +1,14 @@
 package com.rjt.groceryapp.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -17,6 +20,7 @@ import com.rjt.groceryapp.models.Login
 import com.rjt.groceryapp.models.Registration
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -25,8 +29,34 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val toolbar = toolbar
+        toolbar.title = "LOG IN"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         button_login_submit.setOnClickListener{
             doLogin()
+            var intent = Intent(this, CategoryActivity()::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.login_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_setting -> {
+                return true
+            }
+            android.R.id.home -> {
+
+                finish()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -49,7 +79,8 @@ class LoginActivity : AppCompatActivity() {
             Response.Listener {jsonObject: JSONObject ->
                 sharedPreferences.edit().putBoolean("Login", true).commit()
 
-                Toast.makeText(applicationContext, "loggen in $jsonObject", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "logged in $jsonObject", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "logged in" , Toast.LENGTH_SHORT).show()
             },
             Response.ErrorListener {
                 Toast.makeText(applicationContext, "failed $it", Toast.LENGTH_SHORT).show()
