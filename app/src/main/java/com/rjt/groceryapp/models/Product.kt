@@ -1,14 +1,17 @@
 package com.rjt.groceryapp.models
 
+import java.io.Serializable
+
 class Product (
-    var quantity: Int,
-    var _id: String,
-    var catName: String,
-    var subName: String,
-    var productName: String,
-    var image: String,
-    var unit: String,
-    var price: Double,
-    var description: String
-)
+    val subName: String,
+    val productName: String,
+    val image: String,
+    val price: Double,
+    val description: String
+) : Serializable
+{
+    companion object{
+        val PRODUCT: String = "product"
+    }
+}
 

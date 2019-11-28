@@ -1,7 +1,9 @@
 package com.rjt.groceryapp.models
 
+import java.util.*
+
 data class Login (
 
-    var email: String,
-    var password: String
+    val token: String = "",
+    var user: User
 )

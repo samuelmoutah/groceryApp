@@ -7,6 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.GsonBuilder
 
 import com.rjt.groceryapp.R
 import com.rjt.groceryapp.models.Product
@@ -37,7 +44,23 @@ class ProductFragment : Fragment() {
 
 
     private fun getProuct(): ArrayList<Product> {
+        
         var productList: ArrayList<Product> = ArrayList<Product>()
+        val url = "http://rjtmobile.com/grocery/products.json"
+        
+        var requestQueue: RequestQueue = Volley.newRequestQueue(this.activity!!)
+        
+        var stringRequest = StringRequest(Request.Method.GET, url,
+            Response.Listener { response ->
+                var gson = GsonBuilder().create()
+                val data = response.toString()
+
+            },
+            Response.ErrorListener {
+                Toast.makeText(this.activity!!, it.message, Toast.LENGTH_SHORT).show()
+            })
+
+        requestQueue.add(stringRequest)
 
         return productList
     }

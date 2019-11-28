@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.rjt.groceryapp.R
 import com.rjt.groceryapp.models.Login
 import com.rjt.groceryapp.models.Registration
+import com.rjt.groceryapp.models.User
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -38,8 +39,16 @@ class LoginActivity : AppCompatActivity() {
             doLogin()
             var intent = Intent(this, CategoryActivity()::class.java)
             startActivity(intent)
+
+        }
+
+        text_view_new_user.setOnClickListener {
+            var intent = Intent(this, RegisterActivity()::class.java)
+            startActivity(intent)
         }
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.login_menu, menu)
@@ -70,17 +79,27 @@ class LoginActivity : AppCompatActivity() {
         var email= edit_text_login_email.text.toString()
         var password = edit_text_login_password.text.toString()
 
-        var login = Login(email, password)
+        var login = User(email, password)
         //var register = Registration("sam2", "sam2", "sam2555@gmail.com", "12345", "123456")
         var gson = Gson()
+        //send user information to api
         val json = gson.toJson(login)
+
         val jsonObjReq = JsonObjectRequest(
             Request.Method.POST, url, JSONObject(json),
             Response.Listener {jsonObject: JSONObject ->
                 sharedPreferences.edit().putBoolean("Login", true).commit()
 
-                //Toast.makeText(applicationContext, "logged in $jsonObject", Toast.LENGTH_SHORT).show()
-                Toast.makeText(applicationContext, "logged in" , Toast.LENGTH_SHORT).show()
+                //receive successful response jsonObject from api
+                val validCredential = gson.fromJson(jsonObject.toString(), Login::class.java)
+                Toast.makeText(this, """${validCredential.token}
+                    ${validCredential.user}
+                """.trimMargin(), Toast.LENGTH_LONG).show()
+
+//                var intent = Intent(this, CategoryActivity()::class.java)
+//                startActivity(intent)
+//                //Toast.makeText(applicationContext, "logged in $jsonObject", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext, "logged in" , Toast.LENGTH_SHORT).show()
             },
             Response.ErrorListener {
                 Toast.makeText(applicationContext, "failed $it", Toast.LENGTH_SHORT).show()

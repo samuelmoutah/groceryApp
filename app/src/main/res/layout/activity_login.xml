@@ -59,6 +59,14 @@
             android:layout_height="wrap_content"
             android:text="Log in" />
 
+        <TextView
+            android:id="@+id/text_view_new_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New to EatFresh? "
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
+
 
     </LinearLayout>
 

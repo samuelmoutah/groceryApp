@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -15,9 +16,11 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.rjt.groceryapp.R
 import com.rjt.groceryapp.adapters.AdapterCategory
+import com.rjt.groceryapp.fragments.ViewPagerFragment
 import com.rjt.groceryapp.models.Category
 import com.rjt.groceryapp.models.CategoryList
 import kotlinx.android.synthetic.main.activity_category.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
@@ -29,6 +32,9 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
 
+        var viewPagerFragment: ViewPagerFragment = ViewPagerFragment(this)
+        view_pager1.adapter = viewPagerFragment
+
         init()
 
         val toolbar = toolbar
@@ -36,6 +42,7 @@ class CategoryActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         getCategory()
+
 
     }
 
@@ -60,7 +67,7 @@ class CategoryActivity : AppCompatActivity() {
     private fun init() {
 
         var list = ArrayList<Category>()
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = GridLayoutManager(this, 2)
         //view.recycler_view.layoutManager = GridLayoutManager(activity, 2)
         adapter = AdapterCategory(this, list)
         recycler_view.adapter = adapter

@@ -34,11 +34,6 @@ class RegisterActivity : AppCompatActivity() {
             var intent = Intent(this, LoginActivity()::class.java)
             startActivity(intent)
         }
-        text_view_login.setOnClickListener {
-            var intent = Intent(this, LoginActivity()::class.java)
-            startActivity(intent)
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
