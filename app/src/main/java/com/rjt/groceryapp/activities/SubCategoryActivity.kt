@@ -1,24 +1,21 @@
 package com.rjt.groceryapp.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.rjt.groceryapp.R
+import com.rjt.groceryapp.activities.app.Endpoints
 import com.rjt.groceryapp.adapters.AdapterFragment
-import com.rjt.groceryapp.models.CategoryList
 import com.rjt.groceryapp.models.SubCategory
 import com.rjt.groceryapp.models.SubCategoryList
-import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_sub_category.*
 import kotlinx.android.synthetic.main.app_bar.*
 
@@ -34,7 +31,7 @@ class SubCategoryActivity : AppCompatActivity() {
         init()
         //getSubCategory()
 
-        val toolbar = toolbar
+        val toolbar = toolbar as Toolbar
         toolbar.title = "PRODUCT LIST"
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,7 +44,7 @@ class SubCategoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_setting -> {
                 return true
             }
@@ -69,9 +66,9 @@ class SubCategoryActivity : AppCompatActivity() {
 
         adapterFragment = AdapterFragment(supportFragmentManager)
 
-        for(subCategory in getSubCategory()){
-                adapterFragment?.addFragment(subCategory)
-            }
+        for (subCategory in getSubCategory()) {
+            adapterFragment?.addFragment(subCategory)
+        }
         view_pager.adapter = adapterFragment
         tab_layout.setupWithViewPager(view_pager)
 
@@ -81,9 +78,9 @@ class SubCategoryActivity : AppCompatActivity() {
 
         var list: ArrayList<SubCategory> = ArrayList<SubCategory>()
 
-        val categoryName = intent.getStringExtra("CatName")
+        val catId = intent.getIntExtra("CatId", 0)
 
-        val url = "https://apolis-grocery.herokuapp.com/api/subcategory/name/$categoryName"
+        val url = Endpoints.getSubCatergory(catId)
 
         var requestQueue = Volley.newRequestQueue(this)
         var stringRequest = StringRequest(
@@ -91,24 +88,35 @@ class SubCategoryActivity : AppCompatActivity() {
             Response.Listener { response ->
                 var data = response.toString()
                 var gson = GsonBuilder().create()
-                var subCategoryList: SubCategoryList = gson.fromJson(data, SubCategoryList::class.java)
+                var subCategoryList: SubCategoryList =
+                    gson.fromJson(data, SubCategoryList::class.java)
 
 
 
                 list = subCategoryList.data
 
-                for(subCategory in list){
+                for (subCategory in list) {
                     adapterFragment?.addFragment(subCategory)
                 }
                 view_pager.adapter = adapterFragment
-                tab_layout.setupWithViewPager(view_pager)
 
+                //tab_layout.setupWithViewPager(view_pager)
                 //adapterFragment?.notifyDataSetChanged()
 
             },
 
             Response.ErrorListener {
-                Log.e("mo", it.message)
+                //                Log.e("mo", it.message)
+                var tempSubCategory = ArrayList<SubCategory>()
+                tempSubCategory.add(
+                    SubCategory(
+                        "sub1", 1
+                    )
+                )
+                for (subCategory in tempSubCategory) {
+                    adapterFragment?.addFragment(subCategory)
+                }
+                view_pager.adapter = adapterFragment
             })
 
         requestQueue.add(stringRequest)

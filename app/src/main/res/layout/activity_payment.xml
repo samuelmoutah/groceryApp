@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Credit Card Information"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textColor="#000"/>
+
+
+
+        <EditText
+            android:id="@+id/edit_text_card_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Card Number" />
+
+        <EditText
+            android:id="@+id/edit_text_phone_for_shipping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="mm/yy" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Pay"
+            android:id="@+id/btn_next"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"/>
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

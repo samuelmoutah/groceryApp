@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/app_bar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="USER INFOMATION"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="#000"/>
+
+    <EditText
+        android:id="@+id/edit_text_name_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Enter name" />
+
+    <EditText
+        android:id="@+id/edit_text_phone_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Enter phone number" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="SHIPPING ADDRESS"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="#000"
+        android:layout_marginTop="50dp"/>
+
+
+    <EditText
+        android:id="@+id/edit_text_address_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Address" />
+
+    <EditText
+        android:id="@+id/edit_text_city_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="City" />
+
+    <EditText
+        android:id="@+id/edit_text_counrtry_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Country" />
+
+    <EditText
+        android:id="@+id/edit_text_zip_for_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Zip" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Select Payment Method"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="#000"/>
+
+    <RadioGroup
+        android:id="@+id/radioPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioCash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioCreditCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credit Card" />
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Next"
+            android:id="@+id/btn_next"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            />
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

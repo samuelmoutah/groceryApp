@@ -3,7 +3,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_layout">
 
     <include layout="@layout/app_bar" />
 
@@ -42,22 +44,26 @@
 
         <EditText
             android:id="@+id/edit_text_login_email"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Email"
+            android:layout_gravity="center"/>
 
 
         <EditText
             android:id="@+id/edit_text_login_password"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="numberPassword"
+            android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/button_login_submit"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log in" />
+            android:text="Log in"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/text_view_new_user"
@@ -65,7 +71,41 @@
             android:layout_height="wrap_content"
             android:text="New to EatFresh? "
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:paddingTop="10dp"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="-------------------- OR --------------------"
+            android:paddingTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="FACEBOOK"
+                android:background="#2b6cae"
+                android:textColor="#fff"
+                android:layout_marginTop="5dp"/>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="GOOGLE"
+                android:background="#e64353"
+                android:textColor="#fff"
+                android:layout_marginTop="5dp"/>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

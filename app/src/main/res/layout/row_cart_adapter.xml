@@ -1,0 +1,83 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_view_cart"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:id="@+id/text_view_product_name_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image_view_cart"
+            android:text="Product Name"
+            android:textColor="#000"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/text_view_price_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_product_name_cart"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/image_view_cart"
+            android:text="price"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_view_delete_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_delete_black_24dp" />
+
+        <ImageView
+            android:id="@+id/image_view_plus"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/image_view_delete_cart"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            android:onClick="increaseNumber"/>
+
+        <TextView
+            android:id="@+id/text_view_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/image_view_plus"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/image_view_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_remove_circle_black_24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/text_view_quantity"
+            android:layout_marginRight="10dp"
+            android:onClick="decreaseNumber"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+

@@ -1,24 +1,27 @@
 package com.rjt.groceryapp.activities
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.rjt.groceryapp.R
+import com.rjt.groceryapp.activities.Helper.SessionManager
+import com.rjt.groceryapp.activities.app.Config
+import com.rjt.groceryapp.activities.app.Endpoints
 import com.rjt.groceryapp.models.Login
-import com.rjt.groceryapp.models.Registration
-import com.rjt.groceryapp.models.User
+import com.rjt.groceryapp.models.User1
+import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
+import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -30,15 +33,27 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val toolbar = toolbar
+        val toolbar = toolbar as Toolbar
         toolbar.title = "LOG IN"
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         button_login_submit.setOnClickListener{
-            doLogin()
-            var intent = Intent(this, CategoryActivity()::class.java)
-            startActivity(intent)
+            var isValidEmail = edit_text_login_email.nonEmpty()
+            var isValidPassword = edit_text_login_password.nonEmpty()
+
+            if(isValidEmail == false){
+                edit_text_login_email.setHint("Please enter email")
+                edit_text_login_email.setHintTextColor(Color.RED)
+            }
+
+            if(isValidPassword == false){
+                edit_text_login_password.setHint("Please enter password")
+                edit_text_login_password.setHintTextColor(Color.RED)
+            }
+            else {
+                doLogin()
+            }
 
         }
 
@@ -57,6 +72,11 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
+            R.id.action_signup -> {
+                startActivity(Intent(this, RegisterActivity::class.java))
+                return true
+            }
+
             R.id.action_setting -> {
                 return true
             }
@@ -71,33 +91,41 @@ class LoginActivity : AppCompatActivity() {
 
     private fun doLogin() {
 
-        var sharedPreferences: SharedPreferences = getSharedPreferences("Shared", Context.MODE_PRIVATE)
+        //var sharedPreferences: SharedPreferences = getSharedPreferences("Shared", Context.MODE_PRIVATE)
 
-        val url: String = "https://apolis-grocery.herokuapp.com/api/auth/login"
+        val url: String = Endpoints.getLogin()
         var requestQueue = Volley.newRequestQueue(this)
 
         var email= edit_text_login_email.text.toString()
         var password = edit_text_login_password.text.toString()
 
-        var login = User(email, password)
+        var credential_validate = User1(email, password)
         //var register = Registration("sam2", "sam2", "sam2555@gmail.com", "12345", "123456")
         var gson = Gson()
         //send user information to api
-        val json = gson.toJson(login)
+        val json = gson.toJson(credential_validate)
 
         val jsonObjReq = JsonObjectRequest(
             Request.Method.POST, url, JSONObject(json),
             Response.Listener {jsonObject: JSONObject ->
-                sharedPreferences.edit().putBoolean("Login", true).commit()
 
                 //receive successful response jsonObject from api
                 val validCredential = gson.fromJson(jsonObject.toString(), Login::class.java)
-                Toast.makeText(this, """${validCredential.token}
-                    ${validCredential.user}
-                """.trimMargin(), Toast.LENGTH_LONG).show()
+//
+//                Toast.makeText(
+//                    this, """${validCredential.token}
+//                    ${validCredential.user}
+//                """.trimMargin(), Toast.LENGTH_LONG
+//                ).show()
 
-//                var intent = Intent(this, CategoryActivity()::class.java)
-//                startActivity(intent)
+
+                var sessionManager = SessionManager(this)
+////
+                sessionManager.createUser(validCredential.token, validCredential.user)
+
+
+                var intent = Intent(this, CategoryActivity()::class.java)
+                startActivity(intent)
 //                //Toast.makeText(applicationContext, "logged in $jsonObject", Toast.LENGTH_SHORT).show()
 //                Toast.makeText(applicationContext, "logged in" , Toast.LENGTH_SHORT).show()
             },

@@ -38,11 +38,28 @@ class AdapterCategory (val mContext: Context, var mList: ArrayList<Category>) : 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(category: Category){
             itemView.text_view_category_name.text = category.catName
+            itemView.image_view.setImageResource(
+                when(category.catName){
+                    "Bakery" -> {
+                        R.drawable.bakery
+                    }
+                    "Dairy" -> {
+                        R.drawable.dairy
+                    }
+                    "Beverages" -> {
+                        R.drawable.beverage
+                    }
+                    else -> {
+                        R.drawable.fruit
+                    }
+                }
+            )
+
 
 
             itemView.setOnClickListener {
                 var intent = Intent(mContext, SubCategoryActivity::class.java)
-                intent.putExtra("CatName", category.catName)
+                intent.putExtra("CatId", category.catId)
                 mContext.startActivity(intent)
 
             }

@@ -20,7 +20,8 @@ import com.rjt.groceryapp.R
 class ViewPagerFragment(private val mcontext: Context) : PagerAdapter() {
     private val image_resource =
         intArrayOf(
-
+            R.drawable.holiday2,
+            R.drawable.holiday4,
             R.drawable.cool,
             R.drawable.milk
         )

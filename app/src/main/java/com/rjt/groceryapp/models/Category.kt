@@ -6,5 +6,6 @@ data class Category (
     var catName: String,
     var catImage: String,
     var catDescription: String,
-    var slug: String
+    var slug: String,
+    var catId: Int
 )
